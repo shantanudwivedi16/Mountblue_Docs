@@ -38,7 +38,7 @@ In the above document, our webpage is dependent on style.css to provide styles t
 
 But the question still stands, how does a browser render this beautiful-looking webpage from a simple HTML file which contains nothing but text? For that, we need to understand what is DOM, CSSOM, and Render Tree?
 
-# Document Object Model (DOM)
+## Document Object Model (DOM)
 
 When the browser reads HTML code, whenever it encounters an HTML element like html, body, div etc., it creates a JavaScript object called a Node. Eventually, all HTML elements will be converted to JavaScript objects.
 
