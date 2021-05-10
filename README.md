@@ -1,4 +1,4 @@
-# Mountblue-docs
+# How the browser renders a web page? — DOM, CSSOM, and Rendering
 In this article, we will deep dive into DOM and CSSOM to understand how the browser renders a webpage. The browser blocks some rendering of a webpage until certain resources are loaded first while other resources are loaded asynchronously.
 
 Whenever you are developing a website, there are certain things that are very essential for a good user experience. Some of the common problems a website may encounter could be slow loading of the resources, waiting for unnecessary files to download on initial render, a flash of unstyled content (FOUC), etc. To avoid such problems, we need to understand the lifecycle of how a browser renders a typical webpage.
