@@ -34,7 +34,7 @@ If this header is missing, the browser would not understand how to process the f
 
 In the above document, our webpage is dependent on style.css to provide styles to HTML elements and main.js to perform some JavaScript operations. With some neat CSS styles, our above webpage will look like this.
 
-![](hello world.png)
+![](HelloWorld.png)
 
 But the question still stands, how does a browser render this beautiful-looking webpage from a simple HTML file which contains nothing but text? For that, we need to understand what is DOM, CSSOM, and Render Tree?
 
