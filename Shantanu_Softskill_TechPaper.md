@@ -78,7 +78,7 @@ CSS is not like HTML. It cannot be parsed incrementally because of its cascading
 ## Render Tree
 ![](Images/Render_Tree.png)
 
-Render tree omits all the nodes that are not required, such as **display:none, script, and meta**.
+Render tree omits all the nodes that are not required, such as **display:none**, **script**, and **meta**.
 
 One important difference that you might have come across is between display:none and visibility: hidden. The render tree doesn’t include the node with display: none, whereas visibility:hidden is included.
 
