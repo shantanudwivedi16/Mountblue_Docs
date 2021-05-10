@@ -114,11 +114,13 @@ We can visualize the CSSOM tree for our earlier example using the below diagram.
 ![](CSSOM_tree.png)
 
 As you can see from the above diagram, our CSSOM tree does not contain elements which do not get printed on the screen like <link>, <title>, <script> etc. CSS property values in the red colors are cascaded down from the top while property values in the gray are overriding the inherited values.
-Render Tree
-
+    
+## Render Tree
 Render-Tree is also a tree-like structure constructed by combining DOM and CSSOM trees together. The browser has to calculate the layout of each visible element and paint them on the screen, for that browser uses this Render-Tree. Hence, unless Render-Tree isn’t constructed, nothing is going to get printed on the screen which is why we need both DOM and CSSOM trees.
 
 As Render-Tree is a low-level representation of what will eventually get printed on the screen, it won’t contain nodes that do not hold any area in the pixel matrix. For example, display:none; elements have dimensions of 0px X 0px, hence they won’t be present in Render-Tree.
+
+![](Render_tree.png)
 
 As you can see from the above diagram, Render-Tree combines DOM and CSSOM to generate a tree-like structure containing only the elements which will be printed on the screen.
 
@@ -128,23 +130,21 @@ Unlike DOM API which gives access to the DOM elements in the DOM tree constructe
 
     💡 Since manipulating styles of an element using JavaScript is beyond the scope of this article, so here is the link to awesome CSS Tricks Article that covers the broad spectrum of CSSOM API. We also have new CSS Typed Object API in JavaScript which is more accurate way to maniulate styles of an element.
 
-Rendering Sequence
-
+## Rendering Sequence
 Now that we have a good understanding of what DOM, CSSOM, and Render-Tree are, let’s understand how a browse renders a typical webpage using them. Having a minimal understanding of this process is crucial for any web developers as it will help us design our website for maximum user experience (UX) and performance.
 
 When a web page is loaded, the browser first reads the HTML text and constructs DOM Tree from it. Then it processes the CSS whether that is inline, embedded, or external CSS and constructs the CSSOM Tree from it.
 
 After these trees are constructed, then it constructs the Render-Tree from it. Once the Render-Tree is constructed, then the browser starts the printing individual elements on the screen.
-Layout operation
 
+### Layout operation
 The first browser creates the layout of each individual Render-Tree node. The layout consists of the size of each node in pixels and where (position) it will be printed on the screen. This process is called layout since the browser is calculating the layout information of each node.
 
 This process is also called reflow or browser reflow and it can also occur when you scroll, resize the window or manipulate DOM elements. Here is a list of events that can trigger the layout/reflow of the elements.
 
     💡 We should avoid the webpage going through multiple layout operations for minuscule reasons since it is a costly operation. Here is an article by Paul Lewis where he talks about how we can avoid complex and costly layout operations as well as layout thrashing.
 
-Paint operation
-
+### Paint operation
 Until now we have a list of geometries that need to be printed on the screen. Since elements (or a sub-tree) in the Render-Tree can overlap each other and they can have CSS properties that make them frequently change the look, position, or geometry (such as animations), the browser creates a layer for it.
 
 Creating layers helps the browser efficiently perform painting operations throughout the lifecycle of a web page such as while scrolling or resizing the browser window. Having layers also help the browser correctly draw elements in the stacking order (along the z-axis) as they were intended by the developer.
@@ -157,25 +157,25 @@ The analogy of layers in Photoshop can be applied to how the browser renders a w
 
     💡 Rasterization is normally done in CPU which makes it slow and expensive, but we now have new techniques to do it in GPU for performance enhancement. This intel article covers painting topic in details, it’s a must read. To understand concept of layers in great details, this is a must read article.
 
-Compositing operation
-
+### Compositing operation
 Until now, we haven’t drawn a single pixel on the screen. What we have are different layers (bitmap images) that should be drawn on the screen in a specific order. In compositing operations, these layers are sent to GPU to finally draw it on the screen.
 
 Sending entire layers to draw is clearly inefficient because this has to happen every time there is a reflow (layout) or repaint. Hence, a layer is broken down into different tiles which then will be drawn on the screen. You can also visualize these tiles in Chrome’s DevTool Rendering panel.
 
 From the above information, we can construct a sequence of events the browser goes through from a web page to render things on the screen from as simple as HTML and CSS text content.
 
+![](Critical_Rendering_Path.png)
+
 This sequence of events is also called the critical rendering path.
 
     💡 Mariko Kosaka has written a beautiful article on this process with cool illustrations and broader explanations of each concept. Highly recommended.
 
-Browser engines
-
+### Browser engines
 The job of creating DOM Tree, CSSOM Tree, and handle rendering logic is done using a piece of software called a Browser Engine (also known as Rendering Engine or Layout Engine) which resides inside the browser. This browser engine contains all the necessary elements and logic to render a web page from HTML code to actual pixels on the screen.
 
 If you heard people talking about WebKit, they were talking about a browser engine. WebKit is used by Apple’s Safari browser and was the default rendering engine for the Google Chrome browser. As of now, the Chromium project uses Blink as the default rendering engine. Here is a list of different browser engine used by some of the top web browsers.
-Rendering Process in browsers
 
+## Rendering Process in browsers
 We all know that JavaScript language is standardized through the ECMAScript standard, in fact since JavaScript is a registered trademark, we just call it ECMAScript now. Therefore, every JavaScript engine provider such as V8, Chakra, Spider Monkey, etc. has to obey the rules of this standard.
 
 Having a standard gives us consistent JavaScript experience among all JavaScript runtimes such as browsers, Node, Deno, etc. This is great for the consistent and flawless development of JavaScript (and web) applications for multiple platforms.
@@ -186,15 +186,20 @@ Therefore, it’s hard to predict the rendering sequence in a particular browser
 
 Despite these inconsistencies, there are some common principles that are usually the same among all browsers. Let’s understand the common approach a browser takes to render things on the screen and the lifecycle events of this process. To understand this process, I have prepared a small project to test different rendering scenarios (link below).
 
-Parsing and External Resources
-
+### Parsing and External Resources
 Parsing is the process of reading HTML content and constructing a DOM tree from it. Hence the process is also called DOM parsing and the program that does that is called the DOM parser.
 
 Most browsers provide the DOMParser Web API to construct a DOM tree from the HTML code. An instance of DOMParser class represents a DOM parser and using the parseFromString prototype method, we can parse raw HTML text (code) into a DOM tree (as shown below).
 
+![](DevTools.png)
+
 When the browser request for a webpage and server responds with some HTML text (with Content-Type header set to text/html), a browser may start parsing the HTML as soon as a few characters or lines of the entire document are available. Hence the browser can build the DOM tree incrementally, one node at a time. The browser parses HTML from top to bottom and not anywhere in the middle since the HTML represents a nested tree-like structure.
 
+![](localhost_incremental.gif)
+
 In the above example, we have accessed the incremental.html file from our Node server and set the network speed to only 10kbps (from the Network panel). Since it will take a long time for the browser to load (download) this file (as it contains 1000 h1 elements), the browser constructs a DOM tree from the first few bytes and prints them on the screen (as it downloads the remaining content of the HTML file in the background).
+
+![](localhost_incremental1.gif)
 
 If you have a look at the Performance chart of the above request, you will be able to see some events in the Timing row. These events are commonly known as performance metrics. When these events are placed as close as possible to each other and happen as early as possible, better the user experience.
 
@@ -227,7 +232,11 @@ We also have a magical defer attribute for the script element which works simila
 
 All normal scripts (embedded or external) are parser-blocking as they halt the construction of DOM. All async scripts (AKA asynchronous scripts) do not block parser until they are downloaded. As soon as an async script is downloaded, it becomes parser-blocking. However, all defer scripts (AKA deferred scripts) are non-parser-blocking script as they do not block the parser and execute after the DOM tree is fully constructed.
 
+![](parser_blocking.gif)
+
 In the above example, the parser-blocking.html file contains a parser-blocking script after 30 elements which is why the browser displays 30 elements at first, stops the DOM parsing, and starts loading the script file. The second script file doesn't block the parsing as it has the defer attribute, so it will execute once the DOM tree is fully constructed.
+
+![](parser_blocking1.gif)
 
 If we take a look at the Performance panel, the FP and FCP happens as soon as possible (hidden behind the Timings label) since the browser starts to build a DOM tree as soon as some HTML content is available, hence it can render some pixels on the screen.
 
@@ -243,8 +252,7 @@ The reason it is called speculative parsing because the browser is making a spec
 
     💡 Every browser has a mind of its own, so when or if speculative parsing will happen is not guaranteed. However, you can ask the browser to load some resources ahead of time using the <link rel="preload"> element.
 
-Render-Blocking CSS
-
+### Render-Blocking CSS
 As we learned, any external resource request except a parser-blocking script file doesn’t block the DOM parsing process. Hence CSS (including embedded) doesn’t block the DOM parser…(wait for it)…directly. Yes, CSS can block DOM parsing but for that, we need to understand the rendering processes.
 
 The browser engines inside your browser construct the DOM tree from HTML content received as a text document from the server. Similarly, it constructs the CSSOM tree from the stylesheet content such as from an external CSS file or embedded (as well as inline) CSS in the HTML.
@@ -265,6 +273,8 @@ Hence browsers do not process external CSS files incrementally and the CSSOM tre
 
 CSS is a render-blocking resource. Once the browser makes a request to fetch an external stylesheet, the Render Tree construction is halted. Therefore the Critical Rendering Path (CRP) is also stuck and nothing is getting rendered on the screen as demonstrated below. However, the DOM tree construction is still undergoing while the stylesheet is being downloaded in the background.
 
+![](render_bloacking.gif)
+
 A browser could have used an older state of the CSSOM tree to generate Render Tree as HTML is getting parsed to render things on the screen incrementally. But this has a huge downside. In this case, once the stylesheet is downloaded and parsed, and CSSOM is updated, Render Tree will be updated and rendered on the screen. Now the Render Tree nodes generated with older CSSOM will be repainted with new styles and it could also lead to Flash of Unstyled Content (FOUC) which is is very bad for UX.
 
 Hence browsers will wait until the stylesheet is loaded and parsed. Once the stylesheet is parsed and CSSOM is updated, the Render Tree is updated, and CRP is unblocked which leads to the paint of Render Tree on the screen. Due to this reason, it is recommended to load all external stylesheets as early as possible, possibly in the head section.
@@ -281,17 +291,21 @@ But once the stylesheet is downloaded and parsed, which leads to CSSOM update, o
 
 As per the HTML5 specification, the browser may download a script file but it will not execute it unless all previous stylesheets are parsed. When a stylesheet blocks the execution of a script, it is called a script-blocking stylesheet or a script-blocking CSS.
 
+![](render_bloacking1.gif)
+
 In the above example, the script-blocking.html contains a link tag (for an external stylesheet) followed by a script tag (for an external JavaScript). Here the script gets downloaded really fast without any delay but the stylesheet takes 6 seconds to download. Hence, even though the script is downloaded completely as we can see from the Network panel, it wasn’t executed by the browser immediately. Only after the stylesheet is loaded, we see the Hello World messaged logged by the script.
 
     💡 Like async or defer attribute makes script element non-parser-blocking, an external stylesheet can also be marked as non-render-blocking using the media attribute. Using the media attribute value, the browser can make a smart decision when to load the stylesheet.
 
-Document’s DOMContentLoaded Event
+### Document’s DOMContentLoaded Event
 
 The DOMContentLoaded (DCL) event marks a point in time when the browser has constructed a complete DOM tree from all the available HTML. But there are a lot of factors involved that can change when the DCL event is fired.
 
+```
 document.addEventListener( 'DOMContentLoaded', function(e) {
     console.log( 'DOM is fully parsed!' );
 } );
+```
 
 If our HTML doesn’t contain any scripts, DOM parsing won’t get blocked and DCL will fire as quickly as the browser can parse the entire HTML. If we have parser-blocking scripts, then DCL has to wait until all parser-blocking scripts are downloaded and executed.
 
@@ -300,16 +314,20 @@ Things get a little complicated when stylesheets are thrown into the picture. Ev
 Script-blocking stylesheet will obviously delay the DCL. In this case, since the script is waiting for the stylesheet to load, the DOM tree is not getting constructed.
 
 DCL is one of the website performance metrics. We should optimize the DCL to be as small as possible (the time at which it occurs). One of the best practices is to use defer and async tag for script element whenever possible so that browser can perform other things while scripts are being downloaded in the background. Second, we should optimize the script-blocking and render-blocking stylesheets.
-Window’s load event
 
+### Window’s load event
 As we know JavaScript can block DOM tree generation but that’s not the case with external stylesheets and files such as images, videos, etc.
 
 The DOMContentLoaded event marks a point in time when the DOM tree is fully constructed and it is safe to access, the window.onload event marks a point in time when external stylesheets and files are downloaded and our web application (complete) has finished downloading.
+
 ```
 window.addEventListener( 'load', function(e) {
   console.log( 'Page is fully loaded!' );
 } )
 ```
+
+![](rendering.gif)
+
 In the above example, the rendering.html file has an external stylesheet in the head that takes around 5 seconds to download. Since it’s in the head section, the FP and FCP occurs after 5 seconds since the stylesheet will block the rendering of any content below it (as it blocks CRP).
 
 After that, we have an img element that loads an image that takes around 10 seconds to download. So the browser will keep downloading this file in the background and move on with the DOM parsing and rendering (as an external image resource is neither parser-blocking nor render-blocking).
