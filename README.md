@@ -111,7 +111,7 @@ For example, color and font-size among others inherits the value of the parent i
 
 We can visualize the CSSOM tree for our earlier example using the below diagram. For the sake of simplicity, we are going to ignore the user-agent styles and focus on CSS styles mentioned earlier.
 
-![](CSSOM_tree)
+![](CSSOM_tree.png)
 
 As you can see from the above diagram, our CSSOM tree does not contain elements which do not get printed on the screen like <link>, <title>, <script> etc. CSS property values in the red colors are cascaded down from the top while property values in the gray are overriding the inherited values.
 Render Tree
