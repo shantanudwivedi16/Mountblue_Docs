@@ -1,5 +1,5 @@
 # How Does the Browser Render a Webpage?
-Understand the inner workings of browsers and the things they’ve been doing all along: DOMs, CSSOMs, render trees, layout, and paint. To create a smooth experience on the web you need to understand how the browser works. To render a page, the browser needs to follow many steps when you visit a website:
+Understand the inner workings of browsers, and the things they’ve been doing all along: DOMs, CSSOMs, render trees, layout, and paint. To create a smooth experience on the web you need to understand how the browser works. To render a page, the browser needs to follow many steps when you visit a website:
 * Look up your resources.
 * Create a connection between server and client.
 * Incrementally download the resources.
@@ -10,7 +10,7 @@ Understand the inner workings of browsers and the things they’ve been doing al
 * Creating a render tree from DOM and CSSOM.
 * Start the layout of the page and then paint.
 
-![](browser_working.png)
+![](Images/browser_working.png)
 
 ## Download the Resources
 When the TCP connection has been made between the server and the client, the data is sent incrementally in small chunks. To understand this, let's take an example:
@@ -69,14 +69,14 @@ Parsing HTML is basically tokenising every bit and piece of the HTML to make som
 
 Before HTML5, there was no standard for constructing the DOM, so different browsers would end up with different-looking DOMs. Now everyone follows the standards. Here’s a sample of HTML parsing:
 
-![](html5Parser.png)
+![](Images/html5Parser.png)
 
 We end up with a DOM tree after this step. We still have a blank screen that is being shown to the end user.
 
 CSS is not like HTML. It cannot be parsed incrementally because of its cascading properties. It has to be parsed once, so keep in mind the size of the CSS you’re sending with the initial load. After parsing the CSS, we have a CSSOM. Now let’s move to the next step of creating a render tree.
 
 ## Render Tree
-![](Render_Tree.png)
+![](Images/Render_Tree.png)
 
 Render tree omits all the nodes that are not required, such as **display:none, script, and meta**.
 
@@ -94,7 +94,7 @@ We have gone through a lot already, but we are missing the most important part o
 
 Whenever we encounter a <script>, the parsing is completely stopped. We fetch the file, parse the file, run JavaScript, and then continue to parse the HTML bit by bit. If we use document.write() in the script, the parsing will begin again. This can be better explained with the image below.
 
-![JS Execution](js_execution.png)
+![JS Execution](Images/js_execution.png)
 
 That is why people tend to have the script at just above the closing body tag. That way, all your parsing is already completed and document nodes are available through JavaScript.
 Conclusion
