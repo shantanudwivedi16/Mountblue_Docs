@@ -57,7 +57,7 @@ When we start receiving the HTML, we start to parse it. This seems straightforwa
 <link rel="stylesheet" href="style.css">
 ```
 
-It will stop the parsing of HTML and make a request call to fetch the file. It’ll download the file and parse the file. The same happens with <script> tags. The browser will not render the page without the CSS. If it does, it’ll show an ugly page, which you might have witnessed when the CSS fails to load. This is the reason you put your CSS links in the head, as the page without CSS would look terrible. If your script tags are at the bottom, right above the closing body tag, they won’t interrupt the rendering of the page, and you can see something on the page to keep the user engaged.For our example, we have downloaded the resources or we have started to stream the HTML to the browser. Let’s see what happens next.
+It will stop the parsing of HTML and make a request call to fetch the file. It’ll download the file and parse the file. The same happens with **script** tags. The browser will not render the page without the CSS. If it does, it’ll show an ugly page, which you might have witnessed when the CSS fails to load. This is the reason you put your CSS links in the head, as the page without CSS would look terrible. If your script tags are at the bottom, right above the closing body tag, they won’t interrupt the rendering of the page, and you can see something on the page to keep the user engaged.For our example, we have downloaded the resources or we have started to stream the HTML to the browser. Let’s see what happens next.
 
 ## Parse HTML and CSS
 Parsing HTML is basically tokenising every bit and piece of the HTML to make something meaningful. HTML parsers are very forgiving and tend to complete a lot of things on their own, like inserting the missing closing tags and so much more. Before HTML5, there was no standard for constructing the DOM, so different browsers would end up with different-looking DOMs. Now everyone follows the standards. Here’s a sample of HTML parsing:
@@ -69,7 +69,7 @@ We end up with a DOM tree after this step. We still have a blank screen that is 
 ## Render Tree
 ![](Images/Render_Tree.png)
 
-Render tree omits all the nodes that are not required, such as **display:none**, **script**, and **meta**. One important difference that you might have come across is between display:none and visibility: hidden. The render tree doesn’t include the node with display: none, whereas visibility:hidden is included. This picture gives a clear example of how the DOM and CSSOM are merged together to create a render tree. This is the last step before the browser starts layouts of the nodes.
+Render tree omits all the nodes that are not required, such as **display:none**, **script**, and **meta**. One important difference that you might have come across is between **display:none** and **visibility: hidden**. The render tree doesn’t include the node with **display: none**, whereas **visibility:hidden** is included. This picture gives a clear example of how the DOM and CSSOM are merged together to create a render tree. This is the last step before the browser starts layouts of the nodes.
 
 ## Layout
 We still haven’t painted anything on the screen as of yet. In this step, we will be calculating the sizes and positions of the nodes in the tree. It’s very good at what it does, so there is very little to explore here. We will look into this in the next sections.
