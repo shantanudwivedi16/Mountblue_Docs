@@ -246,11 +246,11 @@ Window’s load event
 As we know JavaScript can block DOM tree generation but that’s not the case with external stylesheets and files such as images, videos, etc.
 
 The DOMContentLoaded event marks a point in time when the DOM tree is fully constructed and it is safe to access, the window.onload event marks a point in time when external stylesheets and files are downloaded and our web application (complete) has finished downloading.
-
+```
 window.addEventListener( 'load', function(e) {
   console.log( 'Page is fully loaded!' );
 } )
-
+```
 In the above example, the rendering.html file has an external stylesheet in the head that takes around 5 seconds to download. Since it’s in the head section, the FP and FCP occurs after 5 seconds since the stylesheet will block the rendering of any content below it (as it blocks CRP).
 
 After that, we have an img element that loads an image that takes around 10 seconds to download. So the browser will keep downloading this file in the background and move on with the DOM parsing and rendering (as an external image resource is neither parser-blocking nor render-blocking).
