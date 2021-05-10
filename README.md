@@ -11,6 +11,27 @@ Here text/html is a MIME Type which tells the browser that it is an HTML documen
 
 If this header is missing, the browser would not understand how to process the file and it will render in plain text format. But if everything is OK, after this conversion, the browser can start reading the HTML document. A typical HTML document could look like this.
 
+```
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>Rendering Test</title>
+      
+        <!-- stylesheet -->
+        <link rel="stylesheet" href="./style.css"/>
+    </head>
+    <body>
+        <div class="container">
+          <h1>Hello World!</h1>
+          <p>This is a sample paragraph.</p>
+        </div>
+      
+        <!-- script -->
+        <script src="./main.js"></script>
+    </body>
+</html>
+```
+
 In the above document, our webpage is dependent on style.css to provide styles to HTML elements and main.js to perform some JavaScript operations. With some neat CSS styles, our above webpage will look like this.
 
 But the question still stands, how does a browser render this beautiful-looking webpage from a simple HTML file which contains nothing but text? For that, we need to understand what is DOM, CSSOM, and Render Tree?
