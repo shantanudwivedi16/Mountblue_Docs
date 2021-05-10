@@ -7,7 +7,7 @@ First, we need to understand what DOM is. When a browser sends a request to a se
 
 Here text/html is a MIME Type which tells the browser that it is an HTML document and charset=UTF-8 tells the browser that it is encoded in UTF-8 character encoding. Using this information, the browser can convert the binary format into a readable text file. This has shown below in the screenshot.
 
-!(1stpicture.png)
+![](1stpicture.png)
 
 If this header is missing, the browser would not understand how to process the file and it will render in plain text format. But if everything is OK, after this conversion, the browser can start reading the HTML document. A typical HTML document could look like this.
 
