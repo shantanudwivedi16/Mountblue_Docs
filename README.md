@@ -71,6 +71,32 @@ There are different methods of applying styles to HTML elements like using an ex
 
 Let’s say, for our earlier example, we are going to use the below CSS styles (this is not the CSS used for the card shown in the screenshot). For the sake of simplicity, we are not going to be bothered about how we are importing the CSS styles in the HTML page.
 
+```
+html {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    font-size: 14px;
+}
+
+.container {
+    width: 300px;
+    height: 200px;
+    color: black;
+}
+
+.container > h1 {
+    color: gray;
+}
+
+.container > p {
+    font-size: 12px;
+    display: none;
+}
+```
+
 After constructing the DOM, the browser reads CSS from all the sources (external, embedded, inline, user-agent, etc.) and construct a CSSOM. CSSOM stands for CSS Object Model which is a Tree Like structure just like DOM.
 
 Each node in this tree contains CSS style information that will be applied to DOM elements that it target (specified by the selector). CSSOM, however, does not contain DOM elements which can’t be printed on the screen like <meta>, <script>, <title> etc.
@@ -84,6 +110,8 @@ For example, color and font-size among others inherits the value of the parent i
     💡 You can see the computed style of an HTML element by using Chrome DevTools console in Elements panel. Select any HTML element from the left panel and click on the computed tab on the right panel.
 
 We can visualize the CSSOM tree for our earlier example using the below diagram. For the sake of simplicity, we are going to ignore the user-agent styles and focus on CSS styles mentioned earlier.
+
+![](CSSOM_tree)
 
 As you can see from the above diagram, our CSSOM tree does not contain elements which do not get printed on the screen like <link>, <title>, <script> etc. CSS property values in the red colors are cascaded down from the top while property values in the gray are overriding the inherited values.
 Render Tree
