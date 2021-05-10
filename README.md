@@ -44,6 +44,8 @@ When the browser reads HTML code, whenever it encounters an HTML element like ht
 
 Since every HTML element has different properties, the Node object will be created from different classes (constructor functions). For example, the Node object for the div element is created from HTMLDivElement which inherits Node class. For our earlier HTML document, we can visualize these nodes using a simple test as below.
 
+![](LocalHost.png)
+
 The browser comes with built-in classes like HTMLDivElement, HTMLScriptElement, Node etc.
 
 After the browser has created Nodes from the HTML document, it has to create a tree-like structure of these node objects. Since our HTML elements in the HTML file are nested inside each other, the browser needs to replicate that but using Node objects it has previously created. This will help the browser efficiently render and manage the webpage throughout its lifecycle.
