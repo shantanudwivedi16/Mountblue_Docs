@@ -101,4 +101,7 @@ Conclusion
 
 Now you have an overview of how the browser works. You can now dig deeper into how you can structure your code to the best advantage and avoid all the anti-patterns.
 
-Resources
+## Resources
+* [Faresoft gist](https://gist.github.com/faressoft/36cdd64faae21ed22948b458e6bf04d5)
+* [Critical Rendering Path](https://developers.google.com/web/fundamentals/performance/critical-rendering-path)
+* [Medium Article](https://medium.com/jspoint/how-the-browser-renders-a-web-page-dom-cssom-and-rendering-df10531c9969)
